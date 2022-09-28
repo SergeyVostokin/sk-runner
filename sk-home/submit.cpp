@@ -40,7 +40,8 @@ int main()
     sprintf(c_dir_name,"task%.5i",cur_task_num);
     CURRENT_TASK_DIR = TASKS_HOME_DIR + c_dir_name;
     
-    CURPROGFILE = CURRENT_TASK_DIR + "/" + PROGRAM_EXE_FILE;        
+    PROGRAM_SRC_FILE = home_dir + "/" + PROGRAM_SRC_FILE;
+    PROGRAM_EXE_FILE = CURRENT_TASK_DIR + "/" + PROGRAM_EXE_FILE;        
    
     if(mkdir(CURRENT_TASK_DIR.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)!=0){
         cout << "error cannot create dir:" << CURRENT_TASK_DIR << endl;
