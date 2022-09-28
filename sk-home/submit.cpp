@@ -1,10 +1,3 @@
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <cstdio>
-#include <cstdlib>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -16,58 +9,59 @@
 
 using namespace std;
 
-string TASKDIRS = "/taskdir/";
-string LASTTASK = "/taskdir/lasttask.txt";
-string PROGFILE = "program.cpp";
+string TASKS_HOME_DIR = "/sk-home/";
+string CURRENT_TASK_NUM_FILE = "/sk-home/CURRENT_TASK_NUM_FILE.txt";
 
-string CURTASKDIR;
-string CURPROGFILE;
-int last_task;
+string PROGRAM_SRC_FILE = "program.cpp";
+string PROGRAM_EXE_FILE = "program";
+
+string CURRENT_TASK_DIR;
+
+int cur_task_num;
+string command;
 
 int main()
 {
     string home_dir = getenv("HOME");
-    TASKDIRS = home_dir + TASKDIRS;
-    LASTTASK = home_dir + LASTTASK;
+    TASKS_HOME_DIR = home_dir + TASKS_HOME_DIR;
+    CURRENT_TASK_NUM_FILE = home_dir + CURRENT_TASK_NUM_FILE;
     
-    ifstream f_last_task(LASTTASK);
+    ifstream f_cur_task_num(CURRENT_TASK_NUM_FILE);
     
-    if(!f_last_task.is_open()){
-        cout << "error opennig file for reading:" << LASTTASK << endl;
+    if(!f_cur_task_num.is_open()){
+        cout << "error opennig file for reading:" << CURRENT_TASK_NUM_FILE << endl;
         return EXIT_FAILURE;
     }
     
-    f_last_task >> last_task;
-    f_last_task.close();
+    f_cur_task_num >> cur_task_num;
+    f_cur_task_num.close();
             
     char c_dir_name[10];
-    sprintf(c_dir_name,"task%.5i",last_task);
-    CURTASKDIR = TASKDIRS + c_dir_name;
+    sprintf(c_dir_name,"task%.5i",cur_task_num);
+    CURRENT_TASK_DIR = TASKS_HOME_DIR + c_dir_name;
     
-    CURPROGFILE = CURTASKDIR + "/" + PROGFILE; 
-    
-    cout << endl << "last task dir:" << CURTASKDIR << endl;
+    CURPROGFILE = CURRENT_TASK_DIR + "/" + PROGRAM_EXE_FILE;        
    
-    if(mkdir(CURTASKDIR.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)!=0){
-        cout << "error cannot create dir:" << CURTASKDIR << endl;
+    if(mkdir(CURRENT_TASK_DIR.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)!=0){
+        cout << "error cannot create dir:" << CURRENT_TASK_DIR << endl;
         return  EXIT_FAILURE;
     }
+	
+	command = "g++ " + PROGRAM_SRC_FILE + " -o " + PROGRAM_EXE_FILE;
+	
+	if(system(command.c_str())==-1){
+		cout << "error execute:" << command; return  EXIT_FAILURE;
+	}
+        
+    ofstream f_cur_task_num_new(CURRENT_TASK_NUM_FILE,ios::trunc);
     
-    if(rename (PROGFILE.c_str(), CURPROGFILE.c_str()) !=0 ){
-        cout << "error cannot move prog file from:" << PROGFILE << endl;
-        cout << "error cannot move prog file to:" << CURPROGFILE << endl;
-        return  EXIT_FAILURE;
-    }
-    
-    ofstream f_last_task_new(LASTTASK,ios::trunc);
-    
-    if(!f_last_task_new.is_open()){
-        cout << "error opennig file for writing:" << LASTTASK << endl;
+    if(!f_cur_task_num_new.is_open()){
+        cout << "error opennig file for writing:" << CURRENT_TASK_NUM_FILE << endl;
         return EXIT_FAILURE;    
     }
     
-    f_last_task_new << ++last_task;
-    f_last_task_new.close();
+    f_cur_task_num_new << ++cur_task_num;
+    f_cur_task_num_new.close();
         
     return EXIT_SUCCESS;
 }
