@@ -10,15 +10,15 @@
 using namespace std;
 
 // constant input
-string TASKS_HOME_DIR = "/sk-home/";
-string CURRENT_TASK_NUM_FILE = "/sk-home/CURRENT_TASK_NUM_FILE.txt";
+string TASKS_HOME_DIR = "sk-home";
+string CURRENT_TASK_NUM_FILE = "sk-home/CURRENT_TASK_NUM_FILE.txt";
 
-// input
+// input:
 string PROGRAM_SRC_FILE = "program.cpp";
 
-//output
+// output:
 string TASK_NUM_FILE = "tasknum.txt";
-//+stdout
+//--stdout--
 
 string PROGRAM_EXE_FILE = "program";
 string PROGRAM_BAT_FILE = "slurm.batch";
@@ -43,8 +43,8 @@ int main()
     }
     
     string home_dir = getenv("HOME");
-    TASKS_HOME_DIR = home_dir + TASKS_HOME_DIR;
-    CURRENT_TASK_NUM_FILE = home_dir + CURRENT_TASK_NUM_FILE;
+    TASKS_HOME_DIR = home_dir + "/" + TASKS_HOME_DIR;
+    CURRENT_TASK_NUM_FILE = home_dir + "/" + CURRENT_TASK_NUM_FILE;
     
     ifstream f_cur_task_num(CURRENT_TASK_NUM_FILE);
     
@@ -58,7 +58,7 @@ int main()
             
     char c_dir_name[10];
     sprintf(c_dir_name,"task%.5i",cur_task_num);
-    CURRENT_TASK_DIR = TASKS_HOME_DIR + c_dir_name;
+    CURRENT_TASK_DIR = TASKS_HOME_DIR + "/" + c_dir_name;
     
     if(mkdir(CURRENT_TASK_DIR.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)!=0){
         cout << "error cannot create dir:" << CURRENT_TASK_DIR << endl;

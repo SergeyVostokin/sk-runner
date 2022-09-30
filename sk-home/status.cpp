@@ -11,13 +11,13 @@
 using namespace std;
 
 // constant input
-string TASKS_HOME_DIR = "/sk-home/";
+string TASKS_HOME_DIR = "sk-home";
 
-// input
+// input:
 string TASK_NUM_FILE = "tasknum.txt";
 
-// output
-//+stdout
+// output:
+//--stdout--
  
 string CURRENT_TASK_DIR;
 string PROGRAM_OUTPUT = "stdout";
@@ -36,11 +36,11 @@ int main()
     f_task_num.close();
  
     string home_dir = getenv("HOME");
-    TASKS_HOME_DIR = home_dir + TASKS_HOME_DIR;
+    TASKS_HOME_DIR = home_dir + "/" + TASKS_HOME_DIR;
 
     char c_dir_name[10];
     sprintf(c_dir_name,"task%.5i",task_num);
-    CURRENT_TASK_DIR = TASKS_HOME_DIR + c_dir_name;
+    CURRENT_TASK_DIR = TASKS_HOME_DIR + "/" + c_dir_name;
 
     DIR* dir=opendir(CURRENT_TASK_DIR.c_str());
     if(!dir){
@@ -50,8 +50,8 @@ int main()
     }
     
     closedir(dir);
-  
-    string PROGRAM_OUTPUT = CURRENT_TASK_DIR + "/" + PROGRAM_OUTPUT;
+    
+    PROGRAM_OUTPUT = CURRENT_TASK_DIR + "/" + PROGRAM_OUTPUT;
     ifstream f_output_file(PROGRAM_OUTPUT);
     
     if(!f_output_file.is_open()){
@@ -59,6 +59,8 @@ int main()
         cout << "the task may not be ready yet";
         return EXIT_FAILURE;
     }
+    
+    cout << "the task output:" << endl; 
     
     for(string line; getline(f_output_file, line);)cout << line << endl;
     f_output_file.close();

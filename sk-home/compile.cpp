@@ -9,14 +9,11 @@
 
 using namespace std;
 
-// constant input
-string TASKS_HOME_DIR = "/sk-home/";
-
-// input
+// input:
 string PROGRAM_SRC_FILE = "program.cpp";
 
-//output
-//+stdout
+// output:
+//--stdout--
 
 string PROGRAM_EXE_FILE = "program";
 string COMPILE_COMMAND = "g++ " + PROGRAM_SRC_FILE + " 2> error.txt";
@@ -31,10 +28,11 @@ int main()
     string line;
  
     if(getline(f_error, line)){
-        cout << "compilation error:" << COMPILE_COMMAND << endl;
+        cout << "compilation error in: " << COMPILE_COMMAND << endl;
         do{cout << line << endl;}while(getline(f_error, line));
         return EXIT_FAILURE;
     }
         
+    cout << "compilation Ok" << endl;
     return EXIT_SUCCESS;
 }
