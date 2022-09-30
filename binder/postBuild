@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mamba install -c conda-forge xeus-cling
+(echo "Y" | mamba install -c conda-forge xeus-cling)
 
 curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
 python2 get-pip.py
