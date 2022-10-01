@@ -46,7 +46,7 @@ int main()
     TASKS_HOME_DIR = home_dir + "/" + TASKS_HOME_DIR;
     CURRENT_TASK_NUM_FILE = home_dir + "/" + CURRENT_TASK_NUM_FILE;
     
-    ifstream f_cur_task_num(CURRENT_TASK_NUM_FILE);
+    ifstream f_cur_task_num(CURRENT_TASK_NUM_FILE.c_str());
     
     if(!f_cur_task_num.is_open()){
         cout << "error opennig file for reading:" << CURRENT_TASK_NUM_FILE << endl;
@@ -65,7 +65,7 @@ int main()
         return  EXIT_FAILURE;
     }
 
-    ofstream f_task_num(TASK_NUM_FILE);
+    ofstream f_task_num(TASK_NUM_FILE.c_str());
     if(!f_task_num.is_open()){
         cout << "error opennig file for writing:" << TASK_NUM_FILE << endl;
         return EXIT_FAILURE;    
@@ -90,7 +90,7 @@ int main()
     }
     
     PROGRAM_BAT_FILE = CURRENT_TASK_DIR + "/" + PROGRAM_BAT_FILE;
-    ofstream f_bat_file(PROGRAM_BAT_FILE);
+    ofstream f_bat_file(PROGRAM_BAT_FILE.c_str());
     
     if(!f_bat_file.is_open()){
         cout << "error opennig file for writing:" << PROGRAM_BAT_FILE << endl;
@@ -103,7 +103,7 @@ int main()
 	
 	//////////////////// todo: add slurm run here //////////////////////
     
-    ofstream f_cur_task_num_new(CURRENT_TASK_NUM_FILE,ios::trunc);
+    ofstream f_cur_task_num_new(CURRENT_TASK_NUM_FILE.c_str(),ios::trunc);
     
     if(!f_cur_task_num_new.is_open()){
         cout << "error opennig file for writing:" << CURRENT_TASK_NUM_FILE << endl;

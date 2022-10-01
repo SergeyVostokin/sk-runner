@@ -25,7 +25,7 @@ int task_num = -1;
 
 int main()
 { 
-    ifstream f_task_num(TASK_NUM_FILE);
+    ifstream f_task_num(TASK_NUM_FILE.c_str());
     
     if(!f_task_num.is_open()){
         cout << "error opennig file for reading:" << TASK_NUM_FILE << endl;
@@ -52,7 +52,7 @@ int main()
     closedir(dir);
     
     PROGRAM_OUTPUT = CURRENT_TASK_DIR + "/" + PROGRAM_OUTPUT;
-    ifstream f_output_file(PROGRAM_OUTPUT);
+    ifstream f_output_file(PROGRAM_OUTPUT.c_str());
     
     if(!f_output_file.is_open()){
         cout << "error opennig file for reading:" << PROGRAM_OUTPUT << endl;
