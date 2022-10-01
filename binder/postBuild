@@ -13,3 +13,5 @@ mkdir ./conf
 cp everest_agent/agent.conf.default conf/agent.conf
 echo bin/start.sh -c conf/agent.conf >> agent-start.sh
 chmod 755 agent-start.sh
+
+chmod 755 ~/sk-home/build.sh

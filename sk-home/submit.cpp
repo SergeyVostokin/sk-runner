@@ -81,6 +81,14 @@ int main()
         return  EXIT_FAILURE;
     }
     
+    string MOVED_PROGRAM_SRC_FILE = CURRENT_TASK_DIR + "/" + PROGRAM_SRC_FILE;
+    
+    if(rename(PROGRAM_SRC_FILE.c_str(), MOVED_PROGRAM_SRC_FILE.c_str())){
+        cout << "error cannot move file from:" << PROGRAM_EXE_FILE << endl;
+        cout << "to:" << MOVED_PROGRAM_EXE_FILE << endl;
+        return  EXIT_FAILURE;
+    }
+    
     PROGRAM_BAT_FILE = CURRENT_TASK_DIR + "/" + PROGRAM_BAT_FILE;
     ofstream f_bat_file(PROGRAM_BAT_FILE);
     
@@ -90,8 +98,10 @@ int main()
     }
         
     f_bat_file << "#!/bin/bash" << endl;
-    /////////////////////////////////////////////////////////////////////////
+    //////////////////// todo: add slurm commands here //////////////////////
     f_bat_file.close();
+	
+	//////////////////// todo: add slurm run here //////////////////////
     
     ofstream f_cur_task_num_new(CURRENT_TASK_NUM_FILE,ios::trunc);
     
@@ -102,6 +112,8 @@ int main()
     
     f_cur_task_num_new << ++cur_task_num;
     f_cur_task_num_new.close();
+    
+    cout << "submit Ok" << endl;
         
     return EXIT_SUCCESS;
 }
